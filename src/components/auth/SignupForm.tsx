@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Typography } from "antd";
 import { useEffect } from "react";
@@ -14,11 +15,23 @@ const { Text, Title } = Typography;
 
 interface SignUpData {
   username: string;
+=======
+import { LockOutlined, MailOutlined } from "@ant-design/icons";
+import { Button, Form, Input, Typography } from "antd";
+import { useSetRecoilState } from "recoil";
+import authScreenAtom from "../../atoms/authScreenAtom";
+import SocialSignInButtons from "./SocialSignInButtons";
+
+const { Text, Title } = Typography;
+interface SingUpInput {
+  email: string;
+>>>>>>> c87f549 (init project)
   password: string;
   rePassword: string;
 }
 
 const SignupForm = () => {
+<<<<<<< HEAD
   const authState = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -58,6 +71,15 @@ const SignupForm = () => {
 
   return (
     <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md mx-auto">
+=======
+  const setAuthScreenState = useSetRecoilState(authScreenAtom);
+  const onFinish = (values: SingUpInput) => {
+    console.log("Received values of form: ", values);
+  };
+
+  return (
+    <div className="bg-white p-8 rounded-lg shadow-lg min-w-96 ">
+>>>>>>> c87f549 (init project)
       <div className="mb-6 text-center">
         <Title level={2} className="text-2xl font-bold mb-2">
           Sign Up
@@ -69,23 +91,39 @@ const SignupForm = () => {
         initialValues={{
           remember: true,
         }}
+<<<<<<< HEAD
         onFinish={onSubmit}
+=======
+        onFinish={onFinish}
+>>>>>>> c87f549 (init project)
         layout="vertical"
         requiredMark="optional"
       >
         <Form.Item
+<<<<<<< HEAD
           name="username"
           rules={[
             {
               type: "string",
+=======
+          name="email"
+          rules={[
+            {
+              type: "email",
+>>>>>>> c87f549 (init project)
               required: true,
               message: "Please input your Email!",
             },
           ]}
         >
           <Input
+<<<<<<< HEAD
             prefix={<UserOutlined className="text-gray-500 mr-2" />}
             placeholder="Username"
+=======
+            prefix={<MailOutlined className="text-gray-500 mr-2" />}
+            placeholder="Email"
+>>>>>>> c87f549 (init project)
             className="w-full h-12 text-lg border-gray-300 rounded-lg"
           />
         </Form.Item>
@@ -105,7 +143,11 @@ const SignupForm = () => {
           />
         </Form.Item>
         <Form.Item
+<<<<<<< HEAD
           name="rePassword"
+=======
+          name="re-password"
+>>>>>>> c87f549 (init project)
           rules={[
             {
               required: true,
@@ -117,7 +159,11 @@ const SignupForm = () => {
                   return Promise.resolve();
                 }
                 return Promise.reject(
+<<<<<<< HEAD
                   new Error("The two passwords do not match!"),
+=======
+                  new Error("The two passwords do not match!")
+>>>>>>> c87f549 (init project)
                 );
               },
             }),
@@ -135,12 +181,21 @@ const SignupForm = () => {
           </Button>
           <div className="mt-4 text-center">
             <Text className="text-gray-600">Already have an account?</Text>{" "}
+<<<<<<< HEAD
             <Link
               to={"/auth/login"}
               className="text-blue-500 hover:underline cursor-pointer"
             >
               Login
             </Link>
+=======
+            <Text
+              onClick={() => setAuthScreenState("login")}
+              className="text-blue-500 hover:underline cursor-pointer"
+            >
+              Login
+            </Text>
+>>>>>>> c87f549 (init project)
           </div>
           <SocialSignInButtons />
         </Form.Item>

@@ -1,9 +1,19 @@
 import { ArrowLeftOutlined, MailOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Typography } from "antd";
+<<<<<<< HEAD
 import { Link } from "react-router-dom";
 
 const { Text, Title } = Typography;
 const ForgotForm = () => {
+=======
+import { useSetRecoilState } from "recoil";
+import authScreenAtom from "../../atoms/authScreenAtom";
+
+const { Text, Title } = Typography;
+const ForgotForm = () => {
+  const setAuthScreenState = useSetRecoilState(authScreenAtom);
+
+>>>>>>> c87f549 (init project)
   const onFinish = () => {
     console.log("Received values of form: ");
   };
@@ -44,6 +54,7 @@ const ForgotForm = () => {
           />
         </Form.Item>
         <Form.Item>
+<<<<<<< HEAD
           <Button type="primary" htmlType="submit" className="w-full">
             Reset password
           </Button>
@@ -54,6 +65,23 @@ const ForgotForm = () => {
             >
               <ArrowLeftOutlined /> Back to Login
             </Link>
+=======
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="w-full"
+            onClick={() => setAuthScreenState("verify")}
+          >
+            Reset password
+          </Button>
+          <div className="mt-4 text-center">
+            <Text
+              onClick={() => setAuthScreenState("login")}
+              className="text-blue-500 hover:underline cursor-pointer"
+            >
+              <ArrowLeftOutlined /> Back to Login
+            </Text>
+>>>>>>> c87f549 (init project)
           </div>
         </Form.Item>
       </Form>

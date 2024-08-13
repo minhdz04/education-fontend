@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { useState } from "react";
+=======
+import { useState } from 'react';
+>>>>>>> c87f549 (init project)
 
 // Tạo hook useModals
 const useModals = () => {

@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+<<<<<<< HEAD
 @layer base {
   @font-face {
     font-family: "Roboto";
@@ -16,3 +17,5 @@
     font-family: "Roboto", sans-serif;
   }
 }
+=======
+>>>>>>> c87f549 (init project)

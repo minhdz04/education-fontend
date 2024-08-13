@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { message } from "antd";
 // sagas.ts
 import {
@@ -57,10 +58,48 @@ function* loginSaga(action: {
     localStorage.clear();
     const errorMessage = error.response?.data?.message || "Login failed";
     message.error(`Login failed: ${errorMessage}`);
+=======
+// sagas.ts
+import { AxiosResponse } from "axios";
+import { push } from "connected-react-router";
+import { call, put, takeLatest } from "redux-saga/effects";
+import axiosInstance from "../../utils/axiosInstance";
+import {
+    LOGIN_REQUEST,
+    loginFailure,
+    LoginRequestPayload,
+    loginSuccess,
+} from "./actions";
+
+interface LoginResponse {
+  _id: string;
+  name: string;
+  email: string;
+  username: string;
+  bio: string;
+  profilePic: string;
+  token: string;
+}
+
+function* loginSaga(action: { type: string; payload: LoginRequestPayload }) {
+  try {
+    const response: AxiosResponse<LoginResponse> = yield call(
+      axiosInstance.post,
+      "/api/users/login",
+      action.payload
+    );
+    const { data } = response;
+    // Lưu token vào localStorage
+    localStorage.setItem("token", data.token);
+    yield put(loginSuccess(data));
+    yield put(push("/"));
+  } catch (error: any) {
+>>>>>>> c87f549 (init project)
     yield put(loginFailure({ error: error.message }));
   }
 }
 
+<<<<<<< HEAD
 function* registerSaga(action: {
   type: string;
   payload: RegisterRequestPayload;
@@ -106,4 +145,8 @@ export default function* watchAuthSaga() {
   yield takeLatest(LOGIN_REQUEST, loginSaga);
   yield takeLatest(REGISTER_REQUEST, registerSaga);
   yield takeLatest(LOGOUT_REQUEST, logoutSaga);
+=======
+export default function* watchLoginSaga() {
+  yield takeLatest(LOGIN_REQUEST, loginSaga);
+>>>>>>> c87f549 (init project)
 }

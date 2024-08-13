@@ -1,5 +1,6 @@
 import { Skeleton, Spin } from "antd";
 import { Suspense, lazy } from "react";
+<<<<<<< HEAD
 import { matchPath, useLocation, useRoutes } from "react-router-dom";
 import ForgotForm from "../components/auth/ForgotForm";
 import LoginForm from "../components/auth/LoginForm";
@@ -11,6 +12,12 @@ import AttendancePage from "../pages/attendance";
 
 
 // Loading Components
+=======
+import { useRoutes } from "react-router-dom";
+
+//Loading Component
+
+>>>>>>> c87f549 (init project)
 const LoadingIndicator = () => (
   <div className="flex justify-center items-center h-screen text-center">
     <div className="flex flex-col items-center space-y-4">
@@ -37,6 +44,7 @@ const LoadingSkeleton = () => (
 const AuthPage = lazy(() => import("../pages/auth"));
 const DashBoardPage = lazy(() => import("../pages/dashboard"));
 const ErrorPage = lazy(() => import("../pages/errors"));
+<<<<<<< HEAD
 const ClassPage = lazy(() => import("../pages/classes"));
 const MainPage = lazy(() => import("../pages"));
 const StudentPage = lazy(() => import("../pages/student"));
@@ -77,10 +85,17 @@ function MainRoutes() {
   const location = useLocation();
   const title = getTitleFromLocation(location.pathname);
 
+=======
+const MainPage = lazy(() => import("../pages"));
+const AiEmployeePage = lazy(() => import("../pages/aiEmployee"));
+
+function MainRoutes() {
+>>>>>>> c87f549 (init project)
   const routes = useRoutes([
     {
       path: "/auth",
       element: (
+<<<<<<< HEAD
         <PageWithTitle title={title}>
           <Suspense fallback={<LoadingIndicator />}>
             <AuthPage />
@@ -185,16 +200,59 @@ function MainRoutes() {
                 <AttendancePage />
               </Suspense>
             </PageWithTitle>
+=======
+        <Suspense fallback={<LoadingIndicator />}>
+          <AuthPage />
+        </Suspense>
+      ),
+    },
+    {
+      path: "/",
+      element: (
+        <Suspense fallback={<LoadingIndicator />}>
+          <MainPage auth={true} />
+        </Suspense>
+      ),
+      children: [
+        {
+          path: "ai-employee",
+          element: (
+            <Suspense fallback={<LoadingSkeleton />}>
+              <AiEmployeePage />
+            </Suspense>
+          ),
+        },
+        {
+          path: "employee",
+          element: (
+            <Suspense fallback={<LoadingSkeleton />}>
+              <AiEmployeePage />
+            </Suspense>
+          ),
+        },
+        {
+          path: "user",
+          element: (
+            <Suspense fallback={<LoadingSkeleton />}>
+              <AiEmployeePage />
+            </Suspense>
+>>>>>>> c87f549 (init project)
           ),
         },
         {
           path: "/",
           element: (
+<<<<<<< HEAD
             <PageWithTitle title={title}>
               <Suspense fallback={<LoadingSkeleton />}>
                 <DashBoardPage />
               </Suspense>
             </PageWithTitle>
+=======
+            <Suspense fallback={<LoadingSkeleton />}>
+              <DashBoardPage />
+            </Suspense>
+>>>>>>> c87f549 (init project)
           ),
         },
       ],
@@ -202,11 +260,17 @@ function MainRoutes() {
     {
       path: "/*",
       element: (
+<<<<<<< HEAD
         <PageWithTitle title={title}>
           <Suspense fallback={<LoadingIndicator />}>
             <ErrorPage />
           </Suspense>
         </PageWithTitle>
+=======
+        <Suspense fallback={<LoadingIndicator />}>
+          <ErrorPage />
+        </Suspense>
+>>>>>>> c87f549 (init project)
       ),
     },
   ]);
