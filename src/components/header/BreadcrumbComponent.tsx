@@ -25,7 +25,10 @@ const BreadcrumbComponent: React.FC = () => {
   };
 
   return (
-    <Breadcrumb style={{ margin: "24px 28px" }} items={generateBreadcrumbItems()} />
+    <Breadcrumb
+      style={{ margin: "24px 28px" }}
+      items={generateBreadcrumbItems()}
+    />
   );
 };
 

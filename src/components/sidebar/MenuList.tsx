@@ -2,40 +2,25 @@ import {
   BranchesOutlined,
   BugOutlined,
   HomeOutlined,
-  IdcardOutlined,
   LockOutlined,
-  UserOutlined,
 } from "@ant-design/icons";
 import { Menu } from "antd";
 import { ItemType, MenuItemType } from "antd/es/menu/interface";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
-import authScreenAtom from "../../atoms/authScreenAtom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useTheme } from "../../contexts/ThemeContext";
 
 const DashBoardMenuList = () => {
   const { theme, colorBgContainer } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
-  const setAuthScreenState = useSetRecoilState(authScreenAtom);
 
   const handleMenuClick = (key: string) => {
     switch (key) {
       case "signin":
-        setAuthScreenState("login");
-        navigate("/auth");
+        navigate("/auth/login");
         break;
       case "signup":
-        setAuthScreenState("signup");
-        navigate("/auth");
-        break;
-      case "verifyMail":
-        setAuthScreenState("verify");
-        navigate("/auth");
-        break;
-      case "forgotPass":
-        setAuthScreenState("forgotPass");
-        navigate("/auth");
+        navigate("/auth/signup");
         break;
       case "dashboards":
         navigate("/");
@@ -54,18 +39,6 @@ const DashBoardMenuList = () => {
     { key: "ai-employee", icon: <BranchesOutlined />, label: "AI Employee" },
     { key: "employee", icon: <BranchesOutlined />, label: "Employee" },
     { key: "user", icon: <BranchesOutlined />, label: "User" },
-
-
-    // { key: "group-pages", type: "group", label: "Pages" },
-    // {
-    //   key: "corporate",
-    //   icon: <IdcardOutlined />,
-    //   label: "Corporate",
-    //   children: [
-    //     { key: "task-1", label: "Task 1" },
-    //     { key: "task-2", label: "Task 2" },
-    //   ],
-    // },
     {
       key: "authentication",
       icon: <LockOutlined />,
@@ -82,7 +55,6 @@ const DashBoardMenuList = () => {
       icon: <BugOutlined />,
       label: "Error Page",
     },
-    // { key: "userProfile", icon: <UserOutlined />, label: "User Profile" }, 
   ];
 
   return (

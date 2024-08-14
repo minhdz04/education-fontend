@@ -1,12 +1,10 @@
 import { MailOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Typography } from "antd";
-import { useSetRecoilState } from "recoil";
-import authScreenAtom from "../../atoms/authScreenAtom";
+import { Link } from "react-router-dom";
 
 const { Title, Text } = Typography;
 
 const ResetPassForm = () => {
-  const setAuthScreenState = useSetRecoilState(authScreenAtom);
   return (
     <div className="flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-lg text-center min-w-96">
@@ -33,7 +31,6 @@ const ResetPassForm = () => {
             size="large"
             // onClick={handleContinue}
             className="w-full "
-            onClick={() => setAuthScreenState("reset-success")}
           >
             Continue
           </Button>
@@ -43,9 +40,9 @@ const ResetPassForm = () => {
             </Text>
           </div>
           <div className="mt-4">
-            <a href="#" onClick={() => setAuthScreenState("login")}>
+            <Link to={"/auth/login"}>
               <Text type="secondary">Back to log in</Text>
-            </a>
+            </Link>
           </div>
         </Form>
       </div>

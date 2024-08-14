@@ -2,6 +2,7 @@ import { ArrowLeftOutlined, MailOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Typography } from "antd";
 import { useSetRecoilState } from "recoil";
 import authScreenAtom from "../../atoms/authScreenAtom";
+import { Link } from "react-router-dom";
 
 const { Text, Title } = Typography;
 const ForgotForm = () => {
@@ -56,12 +57,12 @@ const ForgotForm = () => {
             Reset password
           </Button>
           <div className="mt-4 text-center">
-            <Text
-              onClick={() => setAuthScreenState("login")}
+            <Link
+              to={"/auth/login"}
               className="text-blue-500 hover:underline cursor-pointer"
             >
               <ArrowLeftOutlined /> Back to Login
-            </Text>
+            </Link>
           </div>
         </Form.Item>
       </Form>

@@ -1,20 +1,57 @@
-import { LockOutlined, MailOutlined } from "@ant-design/icons";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Typography } from "antd";
-import { useSetRecoilState } from "recoil";
-import authScreenAtom from "../../atoms/authScreenAtom";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  registerRequest,
+  RegisterRequestPayload,
+} from "../../redux/auth/actions";
+import { RootState } from "../../redux/store";
 import SocialSignInButtons from "./SocialSignInButtons";
 
 const { Text, Title } = Typography;
-interface SingUpInput {
-  email: string;
+interface SingUpData {
+  username: string;
   password: string;
   rePassword: string;
 }
 
 const SignupForm = () => {
-  const setAuthScreenState = useSetRecoilState(authScreenAtom);
-  const onFinish = (values: SingUpInput) => {
-    console.log("Received values of form: ", values);
+  const authState = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (authState.isAuthenticated) {
+      navigate("/");
+    }
+  }, [authState.isAuthenticated, history]);
+
+  const generateRandomName = (length: number): string => {
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    let result = "";
+    const lettersLength = letters.length;
+
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * lettersLength);
+      result += letters[randomIndex];
+    }
+
+    return result;
+  };
+
+  const onSubmit = (values: SingUpData) => {
+    const name = generateRandomName(3);
+    const email = name + "@gmail.com";
+    const payload: RegisterRequestPayload = {
+      username: values.username,
+      password: values.password,
+      re_password: values.rePassword,
+      name: name,
+      email: email,
+    };
+    console.log(payload);
+    dispatch(registerRequest(payload), navigate);
   };
 
   return (
@@ -30,23 +67,23 @@ const SignupForm = () => {
         initialValues={{
           remember: true,
         }}
-        onFinish={onFinish}
+        onFinish={onSubmit}
         layout="vertical"
         requiredMark="optional"
       >
         <Form.Item
-          name="email"
+          name="username"
           rules={[
             {
-              type: "email",
+              type: "string",
               required: true,
               message: "Please input your Email!",
             },
           ]}
         >
           <Input
-            prefix={<MailOutlined className="text-gray-500 mr-2" />}
-            placeholder="Email"
+            prefix={<UserOutlined className="text-gray-500 mr-2" />}
+            placeholder="Username"
             className="w-full h-12 text-lg border-gray-300 rounded-lg"
           />
         </Form.Item>
@@ -66,7 +103,7 @@ const SignupForm = () => {
           />
         </Form.Item>
         <Form.Item
-          name="re-password"
+          name="rePassword"
           rules={[
             {
               required: true,
@@ -96,12 +133,12 @@ const SignupForm = () => {
           </Button>
           <div className="mt-4 text-center">
             <Text className="text-gray-600">Already have an account?</Text>{" "}
-            <Text
-              onClick={() => setAuthScreenState("login")}
+            <Link
+              to={"/auth/login"}
               className="text-blue-500 hover:underline cursor-pointer"
             >
               Login
-            </Text>
+            </Link>
           </div>
           <SocialSignInButtons />
         </Form.Item>

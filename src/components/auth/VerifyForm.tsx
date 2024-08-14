@@ -13,10 +13,6 @@ const VerifyForm = () => {
     setOtp(e.target.value);
   };
 
-  //   const handleContinue = () => {
-  //     console.log("Entered OTP: ", otp);
-  //   };
-
   return (
     <div className="flex items-center justify-center p-8 min-w-96">
       <div className="bg-white p-8 rounded-lg shadow-lg text-center">

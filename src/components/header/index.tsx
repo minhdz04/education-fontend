@@ -9,6 +9,8 @@ import {
 import { Button, Dropdown, Input, Layout, MenuProps } from "antd";
 import { useTheme } from "../../contexts/ThemeContext";
 import { useState, useEffect } from "react";
+import { logoutRequest } from "../../redux/auth/actions";
+import { useDispatch } from "react-redux";
 
 const { Header } = Layout;
 
@@ -42,14 +44,20 @@ const items: MenuProps["items"] = [
 const AppHeader = () => {
   const { theme, iconColor } = useTheme();
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
+  const handleLogout = () => {
+    dispatch(logoutRequest({}));
+  };
+
+  const handleMenuClick = (e: { key: string }) => {
+    if (e.key === "4") {
+      handleLogout();
+    }
+  };
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 0);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -68,60 +76,40 @@ const AppHeader = () => {
         width: "100%",
         display: "flex",
         alignItems: "center",
-        padding: 0,
-        marginTop: 10,
+        padding: "0 16px",
         background: "#F7F9FB",
         boxShadow: isScrolled ? "0 2px 8px rgba(0, 0, 0, 0.1)" : "none",
         transition: "box-shadow 0.3s ease-in-out",
       }}
       className="flex items-center justify-between"
     >
-      <div className="flex items-center ml-4">
+      <div className="flex items-center flex-grow max-w-md">
         <Input
           placeholder="Search"
           prefix={<SearchOutlined />}
-          className="ml-4 rounded-lg size-10"
+          className="rounded-lg w-full"
           style={{
-            width: 300,
             backgroundColor: theme === "light" ? "white" : "#312E3F",
             color: theme === "light" ? "black" : "white",
           }}
         />
       </div>
-      <div className="flex items-center mr-4">
+      <div className="flex items-center ">
         <Button
           icon={<MessageOutlined />}
           type="text"
           style={{
-            margin: 0,
-            padding: 0,
-            border: "none",
-            background: "none",
-            marginRight: 16,
             color: iconColor,
           }}
         />
-        <Dropdown menu={{ items }} trigger={["click"]}>
-          {/* <Button
-          icon={theme === "light" ? <SunIcon /> : <MoonIcon />}
-          type="text"
-          style={{
-            margin: 0,
-            padding: 0,
-            border: "none",
-            background: "none",
-            marginRight: 16,
-          }}
-          onClick={toggleTheme}
-        /> */}
+        <Dropdown
+          menu={{ items, onClick: handleMenuClick }}
+          trigger={["click"]}
+        >
           <Button
             type="text"
             icon={<UserOutlined />}
             style={{
-              margin: 0,
-              padding: 0,
-              border: "none",
-              background: "none",
               color: iconColor,
             }}
           />
@@ -132,6 +120,3 @@ const AppHeader = () => {
 };
 
 export default AppHeader;
-
-const SunIcon = () => <span>🌞</span>;
-const MoonIcon = () => <span>🌜</span>;

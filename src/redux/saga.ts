@@ -1,9 +1,9 @@
 import { all } from "redux-saga/effects";
-import watchLoginSaga from "./auth/saga";
+import watchAuthSaga from "./auth/saga";
 
 export default function* rootSaga() {
   yield all([
-    watchLoginSaga(),
+    watchAuthSaga(),
     // thêm các saga khác nếu có
   ]);
 }
