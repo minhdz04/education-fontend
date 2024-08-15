@@ -53,13 +53,14 @@ function* loginSaga(action: {
   try {
     const response: LoginResponse = yield call(
       AuthService.loginUser,
-      action.payload
+      action.payload,
     );
     const { data } = response;
     localStorage.setItem("token", data.token);
     message.success("Login successful!");
     yield put(loginSuccess(data));
   } catch (error: any) {
+    localStorage.clear();
     const errorMessage =
       error instanceof Error ? error.message : "Login failed";
     message.error(`Login failed: ${errorMessage}`);
@@ -74,7 +75,7 @@ function* registerSaga(action: {
   try {
     const response: LoginResponse = yield call(
       AuthService.registerUser,
-      action.payload
+      action.payload,
     );
     const { data } = response;
     localStorage.setItem("token", data.token);
@@ -107,7 +108,7 @@ function* logoutSaga(): Generator<
   }
 }
 
-export default function* watchLoginSaga() {
+export default function* watchAuthSaga() {
   yield takeLatest(LOGIN_REQUEST, loginSaga);
   yield takeLatest(REGISTER_REQUEST, registerSaga);
   yield takeLatest(LOGOUT_REQUEST, logoutSaga);

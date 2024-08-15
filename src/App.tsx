@@ -1,18 +1,13 @@
 // src/App.tsx
-import React from 'react';
-import MainRoutes from './routers'; // Ensure this path is correct
-
+import React from "react";
+import MainRoutes from "./routers"; // Ensure this path is correct
+import { App as AntdApp } from "antd";
 const App: React.FC = () => {
-
-
   return (
-    <div>
+    <AntdApp>
       <MainRoutes />
-    </div>
-
+    </AntdApp>
   );
 };
-
-
 
 export default App;

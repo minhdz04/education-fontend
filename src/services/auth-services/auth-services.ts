@@ -17,7 +17,7 @@ interface LoginResponse {
 }
 
 export const loginUser = async (
-  payload: LoginRequestPayload
+  payload: LoginRequestPayload,
 ): Promise<AxiosResponse<LoginResponse>> => {
   try {
     const respone = await axiosInstance.post("/api/users/login", payload);
@@ -31,7 +31,7 @@ export const loginUser = async (
 };
 
 export const registerUser = async (
-  payload: RegisterRequestPayload
+  payload: RegisterRequestPayload,
 ): Promise<AxiosResponse<LoginResponse>> => {
   try {
     return await axiosInstance.post("/api/users/signup", payload);

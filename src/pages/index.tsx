@@ -2,10 +2,10 @@ import { Layout } from "antd";
 import { Content } from "antd/es/layout/layout";
 import { CSSProperties } from "react";
 import { Outlet } from "react-router-dom";
-import AppHeader from "../components/header";
-import BreadcrumbComponent from "../components/header/BreadcrumbComponent";
-import CustomSider from "../components/sidebar/CustomSider";
+import AppHeader from "../components/shared/header";
+import BreadcrumbComponent from "../components/shared/header/BreadcrumbComponent";
 import { useSiderState } from "../hooks/useSiderState";
+import CustomSider from "../components/shared/sidebar/CustomSider";
 
 const MainPage = () => {
   const { isCollapsed, isSmallScreen, setIsCollapsed, setIsSmallScreen } =

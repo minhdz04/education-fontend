@@ -115,7 +115,7 @@ const SignupForm = () => {
                   return Promise.resolve();
                 }
                 return Promise.reject(
-                  new Error("The two passwords do not match!")
+                  new Error("The two passwords do not match!"),
                 );
               },
             }),

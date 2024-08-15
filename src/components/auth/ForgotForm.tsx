@@ -1,13 +1,9 @@
 import { ArrowLeftOutlined, MailOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Typography } from "antd";
-import { useSetRecoilState } from "recoil";
-import authScreenAtom from "../../atoms/authScreenAtom";
 import { Link } from "react-router-dom";
 
 const { Text, Title } = Typography;
 const ForgotForm = () => {
-  const setAuthScreenState = useSetRecoilState(authScreenAtom);
-
   const onFinish = () => {
     console.log("Received values of form: ");
   };
@@ -48,12 +44,7 @@ const ForgotForm = () => {
           />
         </Form.Item>
         <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="w-full"
-            onClick={() => setAuthScreenState("verify")}
-          >
+          <Button type="primary" htmlType="submit" className="w-full">
             Reset password
           </Button>
           <div className="mt-4 text-center">

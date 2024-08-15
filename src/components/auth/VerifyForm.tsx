@@ -1,14 +1,11 @@
-import { Button, Input, Typography, Form } from "antd";
 import { MailOutlined } from "@ant-design/icons";
+import { Button, Form, Input, Typography } from "antd";
 import { useState } from "react";
-import { useSetRecoilState } from "recoil";
-import authScreenAtom from "../../atoms/authScreenAtom";
 
 const { Title, Text } = Typography;
 
 const VerifyForm = () => {
   const [otp, setOtp] = useState("");
-  const setAuthScreenState = useSetRecoilState(authScreenAtom);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOtp(e.target.value);
   };
@@ -39,7 +36,6 @@ const VerifyForm = () => {
             size="large"
             // onClick={handleContinue}
             className="w-full "
-            onClick={() => setAuthScreenState("reset")}
           >
             Continue
           </Button>
@@ -49,7 +45,7 @@ const VerifyForm = () => {
             </Text>
           </div>
           <div className="mt-4">
-            <a href="#" onClick={() => setAuthScreenState("login")}>
+            <a href="#">
               <Text type="secondary">Back to log in</Text>
             </a>
           </div>

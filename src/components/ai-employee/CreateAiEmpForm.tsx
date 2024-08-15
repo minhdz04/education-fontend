@@ -31,7 +31,7 @@ const CreateAiEmplForm = ({ isModalVisible, hideModal }: Props) => {
       onCancel={hideModal}
       okText="Create"
       cancelText="Cancel"
-      centered 
+      centered
     >
       <Form form={form} layout="vertical">
         <Form.Item

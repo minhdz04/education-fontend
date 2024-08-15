@@ -7,10 +7,12 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Button, Dropdown, Input, Layout, MenuProps } from "antd";
-import { useTheme } from "../../contexts/ThemeContext";
-import { useState, useEffect } from "react";
-import { logoutRequest } from "../../redux/auth/actions";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useTheme } from "../../../contexts/ThemeContext";
+import { logoutRequest } from "../../../redux/auth/actions";
+import { RootState } from "../../../redux/store";
 
 const { Header } = Layout;
 
@@ -45,9 +47,16 @@ const AppHeader = () => {
   const { theme, iconColor } = useTheme();
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const authState = useSelector((state: RootState) => state.auth);
+  useEffect(() => {
+    if (!authState.isAuthenticated) {
+      navigate("/auth/login");
+    }
+  }, [authState.isAuthenticated]);
 
   const handleLogout = () => {
-    dispatch(logoutRequest({}));
+    dispatch(logoutRequest({}), navigate);
   };
 
   const handleMenuClick = (e: { key: string }) => {
@@ -55,6 +64,7 @@ const AppHeader = () => {
       handleLogout();
     }
   };
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);

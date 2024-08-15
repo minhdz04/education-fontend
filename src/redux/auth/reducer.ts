@@ -19,6 +19,7 @@ const initialState = {
 
 export default function authReducer(state = initialState, action: any) {
   switch (action.type) {
+    //login
     case LOGIN_REQUEST:
       return { ...state, loading: true, error: null };
     case LOGIN_SUCCESS:
@@ -30,6 +31,7 @@ export default function authReducer(state = initialState, action: any) {
       };
     case LOGIN_FAILURE:
       return { ...state, loading: false, error: action.payload.error };
+    //logout
     case LOGOUT_REQUEST:
       return { ...state, loading: true, error: null };
     case LOGOUT_SUCCESS:
@@ -38,6 +40,7 @@ export default function authReducer(state = initialState, action: any) {
       return { ...state, loading: false, error: action.payload.error };
     case REGISTER_REQUEST:
       return { ...state, loading: true, error: null };
+    //register
     case REGISTER_SUCCESS:
       return {
         ...state,

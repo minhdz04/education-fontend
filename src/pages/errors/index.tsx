@@ -1,6 +1,5 @@
 import { Button } from "antd";
 const ErrorPage = () => {
-
   return (
     <div className="flex items-center justify-center h-screen w-full p-4">
       <div className="bg-white h-full w-full p-8 rounded-lg shadow-lg text-center">
@@ -9,7 +8,7 @@ const ErrorPage = () => {
         <p className="text-gray-600 mb-8">
           The page you are looking for does not exist.
         </p>
-        <Button type="primary" size="large" >
+        <Button type="primary" size="large">
           <a href="/">Go back</a>
         </Button>
       </div>

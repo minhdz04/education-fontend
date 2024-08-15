@@ -2,8 +2,8 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import Logo from "./Logo";
 import DashBoardMenuList from "./MenuList";
 import Sider from "antd/es/layout/Sider";
-import { useTheme } from "../../contexts/ThemeContext";
-import { useSiderState } from "../../hooks/useSiderState";
+import { useSiderState } from "../../../hooks/useSiderState";
+import { useTheme } from "../../../contexts/ThemeContext";
 const CustomSider = ({
   isCollapsed,
   isSmallScreen,
@@ -11,7 +11,6 @@ const CustomSider = ({
   setIsSmallScreen,
 }: ReturnType<typeof useSiderState>) => {
   const { theme: themeType, colorBgContainer } = useTheme();
-
   return (
     <Sider
       className="scrollbar-none shadow-none"

@@ -1,18 +1,13 @@
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Typography } from "antd";
-import { reduxForm } from "redux-form";
-import SocialSignInButtons from "./SocialSignInButtons";
-import { useDispatch, useSelector } from "react-redux";
-import { loginRequest, LoginRequestPayload } from "../../redux/auth/actions";
-import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { loginRequest, LoginRequestPayload } from "../../redux/auth/actions";
 import { RootState } from "../../redux/store";
+import SocialSignInButtons from "./SocialSignInButtons";
 
 const { Text, Title } = Typography;
-
-interface LoginFormProps {
-  error?: string;
-}
 
 interface LoginFormData {
   username: string;
@@ -28,7 +23,7 @@ const LoginForm = () => {
     if (authState.isAuthenticated) {
       navigate("/");
     }
-  }, [authState.isAuthenticated, history]);
+  }, [authState.isAuthenticated]);
 
   const onSubmit = (values: LoginFormData) => {
     console.log(values);
@@ -36,7 +31,7 @@ const LoginForm = () => {
       username: values.username,
       password: values.password,
     };
-    dispatch(loginRequest(payload), navigate);
+    dispatch(loginRequest(payload));
   };
 
   return (
@@ -88,16 +83,29 @@ const LoginForm = () => {
           />
         </Form.Item>
         <Form.Item>
-          <Button loading={authState.loading} type="primary" htmlType="submit" className="w-full h-10 mb-4">
+          <Button
+            loading={authState.loading}
+            type="primary"
+            htmlType="submit"
+            className="w-full h-10 mb-4"
+          >
             Log in
           </Button>
           <div className="flex justify-center items-center mb-4">
-            <Link to={"/auth/forgot-pass"} className="text-blue-500 hover:underline">Forgot password?</Link>
+            <Link
+              to={"/auth/forgot-pass"}
+              className="text-blue-500 hover:underline"
+            >
+              Forgot password?
+            </Link>
           </div>
 
           <div className="mt-4 text-center">
             <Text className="text-gray-600">Don't have an account?</Text>
-            <Link to={"/auth/signup"} className="text-blue-500 hover:underline cursor-pointer">
+            <Link
+              to={"/auth/signup"}
+              className="text-blue-500 hover:underline cursor-pointer"
+            >
               Sign up now
             </Link>
           </div>
@@ -108,6 +116,4 @@ const LoginForm = () => {
   );
 };
 
-export default reduxForm<LoginFormData, LoginFormProps>({
-  form: "loginForm",
-})(LoginForm);
+export default LoginForm;
