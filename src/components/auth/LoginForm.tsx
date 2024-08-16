@@ -35,9 +35,9 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="bg-white p-8 rounded-lg shadow-lg min-w-96">
+    <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md mx-auto">
       <div className="mb-6 text-center">
-        <Title level={2} className="text-2xl font-bold mb-2 ">
+        <Title level={2} className="text-2xl font-bold mb-2">
           Login
         </Title>
         <Text className="text-gray-600">Welcome back</Text>
@@ -57,14 +57,14 @@ const LoginForm = () => {
             {
               type: "string",
               required: true,
-              message: "Please input your Email!",
+              message: "Please input your Username!",
             },
           ]}
         >
           <Input
             prefix={<MailOutlined className="text-gray-500 mr-2" />}
             placeholder="Email"
-            className="w-full h-12 text-lg border-gray-300 rounded-lg "
+            className="w-full h-12 text-lg border-gray-300 rounded-lg"
           />
         </Form.Item>
         <Form.Item

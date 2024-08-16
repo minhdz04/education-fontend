@@ -10,12 +10,9 @@ interface PrivateRouteProps {
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ element, auth }) => {
   const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated,
+    (state: RootState) => state.auth.isAuthenticated
   ); // replace with your auth state logic
-  const token = localStorage.getItem("token");
-  const isAuthorized = isAuthenticated || token;
-
-  return isAuthorized || !auth ? element : <Navigate to="/auth/login" />;
+  return isAuthenticated || !auth ? element : <Navigate to="/auth/login" />;
 };
 
 export default PrivateRoute;

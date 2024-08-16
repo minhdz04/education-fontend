@@ -11,7 +11,8 @@ import { RootState } from "../../redux/store";
 import SocialSignInButtons from "./SocialSignInButtons";
 
 const { Text, Title } = Typography;
-interface SingUpData {
+
+interface SignUpData {
   username: string;
   password: string;
   rePassword: string;
@@ -21,11 +22,12 @@ const SignupForm = () => {
   const authState = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
   useEffect(() => {
     if (authState.isAuthenticated) {
       navigate("/");
     }
-  }, [authState.isAuthenticated, history]);
+  }, [authState.isAuthenticated, navigate]);
 
   const generateRandomName = (length: number): string => {
     const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -40,9 +42,9 @@ const SignupForm = () => {
     return result;
   };
 
-  const onSubmit = (values: SingUpData) => {
+  const onSubmit = (values: SignUpData) => {
     const name = generateRandomName(3);
-    const email = name + "@gmail.com";
+    const email = `${name}@gmail.com`;
     const payload: RegisterRequestPayload = {
       username: values.username,
       password: values.password,
@@ -51,11 +53,11 @@ const SignupForm = () => {
       email: email,
     };
     console.log(payload);
-    dispatch(registerRequest(payload), navigate);
+    dispatch(registerRequest(payload));
   };
 
   return (
-    <div className="bg-white p-8 rounded-lg shadow-lg min-w-96 ">
+    <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md mx-auto">
       <div className="mb-6 text-center">
         <Title level={2} className="text-2xl font-bold mb-2">
           Sign Up

@@ -37,7 +37,7 @@ const DashBoardMenuList = () => {
   const menuItems: ItemType<MenuItemType>[] = [
     { key: "dashboards", icon: <HomeOutlined />, label: "Dashboards" },
     { key: "ai-employee", icon: <BranchesOutlined />, label: "AI Employee" },
-    { key: "employee", icon: <BranchesOutlined />, label: "Employee" },
+    { key: "company", icon: <BranchesOutlined />, label: "Company" },
     { key: "user", icon: <BranchesOutlined />, label: "User" },
     {
       key: "authentication",

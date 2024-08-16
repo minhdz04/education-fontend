@@ -4,18 +4,16 @@ import AiEmployeeTable from "../../components/ai-employee/AiEmployeeTable";
 import AiEmployeeTabs from "../../components/ai-employee/AiEmployeeTabs";
 import CreateAiEmplForm from "../../components/ai-employee/CreateAiEmpForm";
 import ImportModal from "../../components/ai-employee/ImportForm";
-import { useTheme } from "../../contexts/ThemeContext";
 import useModal from "../../hooks/useModal";
 
 const AiEmployeePage = () => {
-  const { colorBgContainer } = useTheme();
   const { isVisible, showModal, hideModal } = useModal();
 
   return (
     <Layout
       className="rounded-lg"
       style={{
-        background: colorBgContainer,
+        background: "white",
         padding: "20px",
       }}
     >
