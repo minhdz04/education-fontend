@@ -3,7 +3,7 @@ import {
   CloseOutlined,
   FileExcelOutlined,
 } from "@ant-design/icons";
-import { Button, Modal, Upload, message, Spin } from "antd";
+import { Button, Modal, Upload, message, Spin, Row, Col } from "antd";
 import { useState } from "react";
 
 interface ImportModalProps {
@@ -66,6 +66,7 @@ const ImportModal = ({ isModalVisible, hideModal }: ImportModalProps) => {
       open={isModalVisible}
       onCancel={hideModal}
       footer={null}
+      closeIcon={false}
     >
       <div
         style={{
@@ -105,46 +106,65 @@ const ImportModal = ({ isModalVisible, hideModal }: ImportModalProps) => {
             </Upload>
           </div>
         ) : (
-          <div
+          <Row
+            align="middle"
+            justify="space-between"
             style={{
-              border: "2px dashed  #999999",
+              border: "1px dashed #999999",
               borderRadius: 8, // Border radius để bo góc
               padding: 8, // Padding bên trong thẻ
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
               marginBottom: 16,
+              display: "flex",
+              alignItems: "center",
             }}
           >
-            <FileExcelOutlined
-              style={{ fontSize: 28, marginBottom: 8, color: "#28a745" }}
-            />
-            <span
-              style={{
-                display: "block",
-                textAlign: "center",
-                fontWeight: "bold",
-              }}
-            >
-              {fileName}
-            </span>
-            <span style={{ display: "block", color: "#888", fontSize: 12 }}>
-              Excel
-            </span>
-            <Button
-              icon={<CloseOutlined />}
-              onClick={handleClear}
-              type="text"
-              style={{ marginTop: 8 }}
-            />
-          </div>
+            <Col>
+              <Row align="middle">
+                <Col>
+                  <FileExcelOutlined
+                    style={{ fontSize: 28, color: "#28a745", margin: "0 12px" }}
+                  />
+                </Col>
+                <Col>
+                  <div style={{ textAlign: "left" }}>
+                    <span
+                      style={{
+                        display: "block",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {fileName}
+                    </span>
+                    <span
+                      style={{ display: "block", color: "#888", fontSize: 12 }}
+                    >
+                      Excel
+                    </span>
+                  </div>
+                </Col>
+              </Row>
+            </Col>
+            <Col>
+              <Button
+                icon={<CloseOutlined />}
+                onClick={handleClear}
+                type="text"
+              />
+            </Col>
+          </Row>
         )}
-        {fileName && !loading && (
-          <Button onClick={handleUploadClick} type="primary">
-            Upload
-          </Button>
-        )}
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          {fileName && !loading && (
+            <div>
+              <Button onClick={hideModal} type="default" className="m-1">
+                Close
+              </Button>
+              <Button onClick={handleUploadClick} type="primary">
+                Upload
+              </Button>
+            </div>
+          )}
+        </div>
       </div>
     </Modal>
   );

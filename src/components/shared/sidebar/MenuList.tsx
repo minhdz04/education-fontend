@@ -69,7 +69,7 @@ const DashBoardMenuList = () => {
         style={{
           background: colorBgContainer,
         }}
-        className="flex flex-col mt-2 overflow-auto scrollbar scrollbar-thumb-gray-900 scrollbar-track-gray-100"
+        className="flex font-sans flex-col mt-2 overflow-auto scrollbar scrollbar-thumb-gray-900 scrollbar-track-gray-100"
       />
     </div>
   );

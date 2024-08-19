@@ -7,6 +7,9 @@ export default {
       animation: {
         "dots-blinking": "dots-blinking 1.5s infinite",
       },
+      fontFamily: {
+        sans: ["Roboto", "sans-serif"], // Thay đổi font chính của sans
+      },
       keyframes: {
         "dots-blinking": {
           "0%": { opacity: "0" },
