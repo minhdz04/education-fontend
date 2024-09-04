@@ -11,10 +11,11 @@ import {
 } from "./actions";
 
 const initialState = {
-  isAuthenticated: localStorage.getItem('token') ? true : false,
+  isAuthenticated: localStorage.getItem("token") ? true : false,
   user: null,
   loading: false,
   error: null,
+  isRegisteSuccess: false,
 };
 
 export default function authReducer(state = initialState, action: any) {
@@ -45,7 +46,7 @@ export default function authReducer(state = initialState, action: any) {
       return {
         ...state,
         loading: false,
-        isAuthenticated: true,
+        isRegisteSuccess: true,
         user: action.payload,
       };
     case REGISTER_FAILURE:

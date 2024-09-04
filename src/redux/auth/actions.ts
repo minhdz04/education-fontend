@@ -18,13 +18,7 @@ export interface LoginRequestPayload {
   password: string;
 }
 export interface LoginSuccessPayload {
-  _id: string;
-  name: string;
-  email: string;
-  username: string;
-  bio: string;
-  profilePic: string;
-  token: string;
+  access_token: string;
 }
 export interface LoginFailurePayload {
   error: string;
@@ -73,13 +67,7 @@ export interface RegisterRequestPayload {
 }
 
 export interface RegisterSuccessPayload {
-  _id: string;
-  name: string;
-  email: string;
-  username: string;
-  bio: string;
-  profilePic: string;
-  token: string;
+  access_token: string;
 }
 
 export interface RegisterFailurePayload {

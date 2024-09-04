@@ -1,17 +1,22 @@
 import {
-  UploadOutlined,
   CloseOutlined,
   FileExcelOutlined,
+  UploadOutlined,
 } from "@ant-design/icons";
-import { Button, Modal, Upload, message, Spin, Row, Col } from "antd";
+import { Button, Col, Modal, Row, Spin, Upload } from "antd";
 import { useState } from "react";
 
 interface ImportModalProps {
   isModalVisible: boolean;
   hideModal: () => void;
+  handleUpload: () => void;
 }
 
-const ImportModal = ({ isModalVisible, hideModal }: ImportModalProps) => {
+const ImportForm = ({
+  isModalVisible,
+  hideModal,
+  handleUpload,
+}: ImportModalProps) => {
   const [fileName, setFileName] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -22,35 +27,17 @@ const ImportModal = ({ isModalVisible, hideModal }: ImportModalProps) => {
     }
   };
 
-  // Hàm xử lý upload file
-  const handleUpload = (file: any) => {
-    setLoading(true);
-    // Logic để xử lý file upload
-    setTimeout(() => {
-      // Giả lập thời gian xử lý file nặng
-      console.log(file);
-      setLoading(false);
-      message.success("File uploaded successfully");
-    }, 2000);
-    return false; // Ngăn không cho upload file tự động
-  };
-
   // Hàm xử lý khi người dùng nhấn nút Clear
   const handleClear = () => {
     setFileName(null);
   };
-
   // Hàm xử lý upload file sau khi chọn
   const handleUploadClick = () => {
     setLoading(true);
-    setTimeout(() => {
-      // Giả lập thời gian xử lý file nặng
-      setLoading(false);
-      message.success("File uploaded successfully");
-      setFileName(null);
-    }, 2000);
+    handleUpload();
+    setLoading(false);
+    handleClear();
   };
-
   // Hàm rút ngắn tên file
   const shortenFileName = (name: string) => {
     const maxLength = 20; // Độ dài tối đa của tên file
@@ -97,7 +84,7 @@ const ImportModal = ({ isModalVisible, hideModal }: ImportModalProps) => {
             }}
           >
             <Upload
-              customRequest={({ file }) => handleUpload(file)}
+              // customRequest={({ file }) => handleUpload(file)}
               showUploadList={false}
               onChange={handleChange}
               accept=".xls,.xlsx" // Chỉ cho phép chọn file Excel
@@ -170,4 +157,4 @@ const ImportModal = ({ isModalVisible, hideModal }: ImportModalProps) => {
   );
 };
 
-export default ImportModal;
+export default ImportForm;

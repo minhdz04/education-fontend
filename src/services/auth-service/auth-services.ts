@@ -1,26 +1,20 @@
 // services/userService.ts
+import { AxiosResponse } from "axios";
 import {
   LoginRequestPayload,
   RegisterRequestPayload,
 } from "../../redux/auth/actions";
 import axiosInstance from "../../utils/axiosInstance";
-import { AxiosResponse } from "axios";
 
 interface LoginResponse {
-  _id: string;
-  name: string;
-  email: string;
-  username: string;
-  bio: string;
-  profilePic: string;
-  token: string;
+  access_token: string;
 }
 
 export const loginUser = async (
-  payload: LoginRequestPayload
+  payload: LoginRequestPayload,
 ): Promise<AxiosResponse<LoginResponse>> => {
   try {
-    const respone = await axiosInstance.post("/api/users/login", payload);
+    const respone = await axiosInstance.post("/auth/login", payload);
     return respone;
   } catch (error: any) {
     if (error.response && error.response.data && error.response.data.error) {
@@ -31,14 +25,11 @@ export const loginUser = async (
 };
 
 export const registerUser = async (
-  payload: RegisterRequestPayload
+  payload: RegisterRequestPayload,
 ): Promise<AxiosResponse<LoginResponse>> => {
   try {
-    return await axiosInstance.post("/api/users/signup", payload);
+    return await axiosInstance.post("/auth/register", payload);
   } catch (error: any) {
-    if (error.response && error.response.data && error.response.data.error) {
-      throw new Error(error.response.data.error);
-    }
     throw error;
   }
 };

@@ -7,7 +7,7 @@ import {
   PutEffect,
   takeLatest,
 } from "redux-saga/effects";
-import * as AuthService from "../../services/auth-services/auth-services";
+import * as AuthService from "../../services/auth-service/auth-services";
 import {
   LOGIN_REQUEST,
   loginFailure,
@@ -28,13 +28,7 @@ import {
 
 interface LoginResponse {
   data: {
-    _id: string;
-    name: string;
-    email: string;
-    username: string;
-    bio: string;
-    profilePic: string;
-    token: string;
+    access_token: string;
   };
 }
 
@@ -56,13 +50,12 @@ function* loginSaga(action: {
       action.payload,
     );
     const { data } = response;
-    localStorage.setItem("token", data.token);
+    localStorage.setItem("token", data.access_token);
     message.success("Login successful!");
     yield put(loginSuccess(data));
   } catch (error: any) {
     localStorage.clear();
-    const errorMessage =
-      error instanceof Error ? error.message : "Login failed";
+    const errorMessage = error.response?.data?.message || "Login failed";
     message.error(`Login failed: ${errorMessage}`);
     yield put(loginFailure({ error: error.message }));
   }
@@ -78,14 +71,14 @@ function* registerSaga(action: {
       action.payload,
     );
     const { data } = response;
-    localStorage.setItem("token", data.token);
+    console.log("Data : ", data);
     message.success("Registration successful!");
     yield put(registerSuccess(data));
   } catch (error: any) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Registration failed";
+    console.log(error);
+    const errorMessage = error?.response.data.message || "Registration failed";
     message.error(`Registration failed: ${errorMessage}`);
-    yield put(registerFailure({ error: error.message }));
+    yield put(registerFailure({ error: errorMessage + "" }));
   }
 }
 
@@ -103,7 +96,8 @@ function* logoutSaga(): Generator<
     message.success("Logout successful!");
     yield put(logoutSuccess({}));
   } catch (error: any) {
-    message.error(`Logout failed`);
+    const errorMessage = error.response?.data?.message || "Logout failed";
+    message.error(`Logout failed: ${errorMessage}`);
     yield put(logoutFailure({ error: error.message }));
   }
 }

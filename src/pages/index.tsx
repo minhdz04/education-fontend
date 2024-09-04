@@ -36,7 +36,7 @@ const MainPage = () => {
       >
         <AppHeader />
         <Content className="rounded-lg" style={contentStyle}>
-          <BreadcrumbComponent />
+          {/* <BreadcrumbComponent /> */}
           <div
             style={{
               padding: "24px",

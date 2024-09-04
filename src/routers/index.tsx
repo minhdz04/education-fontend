@@ -1,11 +1,11 @@
-import { Skeleton, Spin } from 'antd';
-import { Suspense, lazy } from 'react';
-import { useLocation, useRoutes } from 'react-router-dom';
-import PageWithTitle from '../components/shared/PageWithTitle'; // Import component wrapper
-import LoginForm from '../components/auth/LoginForm';
-import SignupForm from '../components/auth/SignupForm';
-import PrivateRoute from '../components/shared/PrivateRoute';
-import ForgotForm from '../components/auth/ForgotForm';
+import { Skeleton, Spin } from "antd";
+import { Suspense, lazy } from "react";
+import { matchPath, useLocation, useRoutes } from "react-router-dom";
+import ForgotForm from "../components/auth/ForgotForm";
+import LoginForm from "../components/auth/LoginForm";
+import SignupForm from "../components/auth/SignupForm";
+import PageWithTitle from "../components/shared/PageWithTitle"; // Import component wrapper
+import PrivateRoute from "../components/shared/PrivateRoute";
 
 // Loading Components
 const LoadingIndicator = () => (
@@ -31,30 +31,40 @@ const LoadingSkeleton = () => (
 );
 
 // Lazy load các trang
-const AuthPage = lazy(() => import('../pages/auth'));
-const DashBoardPage = lazy(() => import('../pages/dashboard'));
-const ErrorPage = lazy(() => import('../pages/errors'));
-const MainPage = lazy(() => import('../pages'));
-const AiEmployeePage = lazy(() => import('../pages/aiEmployee'));
+const AuthPage = lazy(() => import("../pages/auth"));
+const DashBoardPage = lazy(() => import("../pages/dashboard"));
+const ErrorPage = lazy(() => import("../pages/errors"));
+const ClassPage = lazy(() => import("../pages/classes"));
+const MainPage = lazy(() => import("../pages"));
+const StudentPage = lazy(() => import("../pages/student"));
+const TeacherPage = lazy(() => import("../pages/teacher"));
+
 
 const getTitleFromLocation = (pathname: string) => {
+  if (
+    matchPath({ path: "/student-list/class/:classId", end: false }, pathname)
+  ) {
+    return "Quản lý học sinh";
+  }
   switch (pathname) {
-    case '/auth/login':
-      return 'Đăng nhập';
-    case '/auth/signup':
-      return 'Đăng kí';
-    case '/':
-      return 'Trang Chính';
-    case '/about':
-      return 'Giới Thiệu';
-    case '/ai-employee':
-      return 'Nhân Viên AI';
-    case '/employee':
-      return 'Nhân Viên';
-    case '/user':
-      return 'Người Dùng';
+    case "/auth/login":
+      return "Đăng nhập";
+    case "/auth/signup":
+      return "Đăng kí";
+    case "/":
+      return "Trang Chính";
+    case "/about":
+      return "Giới Thiệu";
+    case "/users":
+      return "Quản lý người dùng";
+    case "/students":
+      return "Quản lý học sinh";
+    case "/teachers":
+      return "Quản lý giáo viên";
+    case "/classes":
+      return "Quản lý lớp học ";
     default:
-      return '404 - Không Tìm Thấy Trang';
+      return "404 - Không Tìm Thấy Trang";
   }
 };
 
@@ -64,7 +74,7 @@ function MainRoutes() {
 
   const routes = useRoutes([
     {
-      path: '/auth',
+      path: "/auth",
       element: (
         <PageWithTitle title={title}>
           <Suspense fallback={<LoadingIndicator />}>
@@ -74,7 +84,7 @@ function MainRoutes() {
       ),
       children: [
         {
-          path: 'login',
+          path: "login",
           element: (
             <PageWithTitle title={title}>
               <Suspense fallback={<LoadingSkeleton />}>
@@ -84,7 +94,7 @@ function MainRoutes() {
           ),
         },
         {
-          path: 'signup',
+          path: "signup",
           element: (
             <PageWithTitle title={title}>
               <Suspense fallback={<LoadingSkeleton />}>
@@ -94,7 +104,7 @@ function MainRoutes() {
           ),
         },
         {
-          path: 'forgot-pass',
+          path: "forgot-pass",
           element: (
             <PageWithTitle title={title}>
               <Suspense fallback={<LoadingSkeleton />}>
@@ -102,47 +112,55 @@ function MainRoutes() {
               </Suspense>
             </PageWithTitle>
           ),
-        }
-      ]
+        },
+      ],
     },
     {
-      path: '/',
-      element: (
-        <PrivateRoute element={<MainPage />} />
-      ),
+      path: "/",
+      element: <PrivateRoute element={<MainPage />} />,
       children: [
         {
-          path: 'ai-employee',
+          path: "users",
           element: (
             <PageWithTitle title={title}>
               <Suspense fallback={<LoadingSkeleton />}>
-                <AiEmployeePage />
+                {/* <AiEmployeePage /> */}
               </Suspense>
             </PageWithTitle>
           ),
         },
         {
-          path: 'employee',
+          path: "classes",
           element: (
             <PageWithTitle title={title}>
               <Suspense fallback={<LoadingSkeleton />}>
-                <AiEmployeePage />
+                <ClassPage />
               </Suspense>
             </PageWithTitle>
           ),
         },
         {
-          path: 'user',
+          path: "student-list/class/:classId",
           element: (
             <PageWithTitle title={title}>
               <Suspense fallback={<LoadingSkeleton />}>
-                <AiEmployeePage />
+                <StudentPage />
               </Suspense>
             </PageWithTitle>
           ),
         },
         {
-          path: '/',
+          path: "teachers",
+          element: (
+            <PageWithTitle title={title}>
+              <Suspense fallback={<LoadingSkeleton />}>
+                <TeacherPage />
+              </Suspense>
+            </PageWithTitle>
+          ),
+        },
+        {
+          path: "/",
           element: (
             <PageWithTitle title={title}>
               <Suspense fallback={<LoadingSkeleton />}>
@@ -154,7 +172,7 @@ function MainRoutes() {
       ],
     },
     {
-      path: '/*',
+      path: "/*",
       element: (
         <PageWithTitle title={title}>
           <Suspense fallback={<LoadingIndicator />}>

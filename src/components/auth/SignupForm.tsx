@@ -24,7 +24,7 @@ const SignupForm = () => {
   const navigate = useNavigate();
   
   useEffect(() => {
-    if (authState.isAuthenticated) {
+    if (authState.isRegisteSuccess) {
       navigate("/");
     }
   }, [authState.isAuthenticated, navigate]);

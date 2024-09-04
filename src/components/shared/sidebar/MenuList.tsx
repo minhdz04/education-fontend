@@ -1,11 +1,8 @@
-import {
-  BranchesOutlined,
-  BugOutlined,
-  HomeOutlined,
-  LockOutlined,
-} from "@ant-design/icons";
+import { HomeOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
 import { ItemType, MenuItemType } from "antd/es/menu/interface";
+import { FaChalkboardTeacher, FaRegUser } from "react-icons/fa";
+import { SiGoogleclassroom } from "react-icons/si";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTheme } from "../../../contexts/ThemeContext";
 
@@ -36,25 +33,9 @@ const DashBoardMenuList = () => {
 
   const menuItems: ItemType<MenuItemType>[] = [
     { key: "dashboards", icon: <HomeOutlined />, label: "Dashboards" },
-    { key: "ai-employee", icon: <BranchesOutlined />, label: "AI Employee" },
-    { key: "company", icon: <BranchesOutlined />, label: "Company" },
-    { key: "user", icon: <BranchesOutlined />, label: "User" },
-    {
-      key: "authentication",
-      icon: <LockOutlined />,
-      label: "Authentication",
-      children: [
-        { key: "signin", label: "Sign In" },
-        { key: "signup", label: "Sign Up" },
-        { key: "verifyMail", label: "Verify Mail" },
-        { key: "forgotPass", label: "Forgot Pass" },
-      ],
-    },
-    {
-      key: "error",
-      icon: <BugOutlined />,
-      label: "Error Page",
-    },
+    { key: "users", icon: <FaRegUser />, label: "Users" },
+    { key: "teachers", icon: <FaChalkboardTeacher />, label: "Teachers" },
+    { key: "classes", icon: <SiGoogleclassroom />, label: "Classes" },
   ];
 
   return (
@@ -69,7 +50,7 @@ const DashBoardMenuList = () => {
         style={{
           background: colorBgContainer,
         }}
-        className="flex font-sans flex-col mt-2 overflow-auto scrollbar scrollbar-thumb-gray-900 scrollbar-track-gray-100"
+        className="flex text-lg from-inherit flex-col mt-2 overflow-auto scrollbar scrollbar-thumb-gray-900 scrollbar-track-gray-100"
       />
     </div>
   );
