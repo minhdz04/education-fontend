@@ -65,7 +65,7 @@ const ScheduleList: React.FC = () => {
     {
       title: "Actions",
       key: "actions",
-      render: (text: any, record: ScheduleData) => (
+      render: (record: ScheduleData) => (
         <Space size="middle"> {/* Sử dụng Space để sắp xếp các phần tử theo chiều ngang */}
           <Dropdown overlay={getMenu(record)} trigger={["click"]}>
             <Button type="text" icon={<EllipsisOutlined />} />
