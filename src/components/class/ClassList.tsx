@@ -15,13 +15,15 @@ const ClassList = ({ classes }) => {
           xxl={5} // One-sixth width on extra-extra-large screens
         >
           <ClassItem
-            classId={classItem.id}
-            title={classItem.name}
-            position={
-              classItem.classroom.name + "-" + classItem.classroom.building.name
-            }
-            totalStudent={29} // need from api
-          />
+              classId={classItem.id}
+              title={classItem.name} // Xử lý nếu `name` là null
+              position={
+                classItem.classroom?.name && classItem.classroom?.building?.name
+                  ? `${classItem.classroom.name}-${classItem.classroom.building.name}`
+                  : "Unknown Location"
+              }
+              totalStudent={29} // cần lấy từ API
+            />
         </Col>
       ))}
     </Row>

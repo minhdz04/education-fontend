@@ -9,10 +9,13 @@ export interface ClassData {
 }
 
 class ClassService {
-  // Lấy danh sách các lớp học
   async getClasses(): Promise<ClassData[]> {
     try {
       const response = await axiosInstance.get<ClassData[]>("/classes");
+      console.log(response.data);
+      if (!response.data) {
+        throw new Error("No data returned from API");
+      }
       return response.data;
     } catch (error) {
       console.error("Error fetching classes:", error);
@@ -22,3 +25,7 @@ class ClassService {
 }
 
 export default new ClassService();
+
+
+
+

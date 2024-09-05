@@ -4,12 +4,16 @@ import { FaPlus } from "react-icons/fa";
 import useModals from "../../hooks/useModal";
 import ImportForm from "../shared/ImportForm";
 import AddClassForm from "./AddClassForm";
+import { uploadFile } from "../../services/upload-service/upload.service";
+import { RcFile } from "antd/es/upload";
 
 const FloatButtonGroup = () => {
-  const handleUpload = () => {
-    notification.success({ message: "File imported successfully!" });
+  const handleUpload = async (file: RcFile) => {
+    console.log(file.name);
+    await uploadFile(file); // Đảm bảo `uploadFile` có thể nhận `RcFile`
     hideModal("importClassExcel"); // Đóng modal sau khi upload thành công
   };
+
   const handleAddClass = () => {
     notification.success({ message: "Add class successfully!" });
     hideModal("addClassModal");

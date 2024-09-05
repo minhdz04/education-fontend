@@ -3,7 +3,6 @@ import { Content } from "antd/es/layout/layout";
 import { CSSProperties } from "react";
 import { Outlet } from "react-router-dom";
 import AppHeader from "../components/shared/header";
-import BreadcrumbComponent from "../components/shared/header/BreadcrumbComponent";
 import { useSiderState } from "../hooks/useSiderState";
 import CustomSider from "../components/shared/sidebar/CustomSider";
 

@@ -3,13 +3,14 @@ import {
   FileExcelOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
-import { Button, Col, Modal, Row, Spin, Upload } from "antd";
+import { Button, Col, message, Modal, Row, Spin, Upload } from "antd";
+import { RcFile } from "antd/es/upload";
 import { useState } from "react";
 
 interface ImportModalProps {
   isModalVisible: boolean;
   hideModal: () => void;
-  handleUpload: () => void;
+  handleUpload: (file: RcFile) => void; // Sửa đổi tham số để truyền file
 }
 
 const ImportForm = ({
@@ -17,27 +18,45 @@ const ImportForm = ({
   hideModal,
   handleUpload,
 }: ImportModalProps) => {
+  const [file, setFile] = useState<any | null>(null); // Lưu trữ file trong state
   const [fileName, setFileName] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
   // Hàm xử lý khi file được chọn
   const handleChange = (info: any) => {
-    if (info.file && info.file.name) {
+    if (info) {
+      setFile(info.file.originFileObj); // Lưu trữ file vào state
       setFileName(shortenFileName(info.file.name));
     }
   };
 
-  // Hàm xử lý khi người dùng nhấn nút Clear
+  // Hàm xử lý khi người dùng nhấn nút Xóa
   const handleClear = () => {
+    setFile(null); // Xóa file đã chọn khỏi state
     setFileName(null);
   };
-  // Hàm xử lý upload file sau khi chọn
-  const handleUploadClick = () => {
+
+  const handleUploadClick = async () => {
+    console.log(file);
+    if (!file) {
+      console.error("Chưa chọn file");
+      return;
+    }
+
+    console.log("Đang tải lên file:", file.name);
     setLoading(true);
-    handleUpload();
-    setLoading(false);
-    handleClear();
+    try {
+      await handleUpload(file); // Gọi hàm handleUpload và truyền file vào
+      console.log("Tải lên thành công");
+    } catch (error) {
+      console.error("Tải lên thất bại:", error);
+    } finally {
+      setLoading(false);
+      handleClear();
+      hideModal();
+    }
   };
+
   // Hàm rút ngắn tên file
   const shortenFileName = (name: string) => {
     const maxLength = 20; // Độ dài tối đa của tên file
@@ -49,7 +68,7 @@ const ImportForm = ({
 
   return (
     <Modal
-      title="Import Excel File"
+      title="Nhập File Excel"
       open={isModalVisible}
       onCancel={hideModal}
       footer={null}
@@ -71,7 +90,7 @@ const ImportForm = ({
               alignItems: "center",
             }}
           >
-            <Spin tip="Uploading..." />
+            <Spin tip="Đang tải lên..." />
           </div>
         ) : !fileName ? (
           <div
@@ -84,12 +103,13 @@ const ImportForm = ({
             }}
           >
             <Upload
-              // customRequest={({ file }) => handleUpload(file)}
-              showUploadList={false}
+              customRequest={() => {}}
+              maxCount={1}
+              showUploadList
               onChange={handleChange}
               accept=".xls,.xlsx" // Chỉ cho phép chọn file Excel
             >
-              <Button icon={<UploadOutlined />}>Click to Upload</Button>
+              <Button icon={<UploadOutlined />}>Nhấp để Tải lên</Button>
             </Upload>
           </div>
         ) : (
@@ -144,10 +164,10 @@ const ImportForm = ({
           {fileName && !loading && (
             <div>
               <Button onClick={hideModal} type="default" className="m-1">
-                Close
+                Đóng
               </Button>
               <Button onClick={handleUploadClick} type="primary">
-                Upload
+                Tải lên
               </Button>
             </div>
           )}
