@@ -29,7 +29,7 @@ const ClassItem = ({
   const [editingClass, setEditingClass] = useState<ClassItemProps>();
 
   const handleClick = () => {
-    navigate(`/student-list/class/${classId}`);
+    navigate(`/schedule/class/${classId}`);
   };
 
   // Edit action

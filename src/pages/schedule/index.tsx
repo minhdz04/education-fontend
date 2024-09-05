@@ -1,17 +1,24 @@
+import { Alert, Layout, Spin, Table } from "antd";
 import React, { useEffect, useState } from "react";
-import { Table, Spin, Alert, Dropdown, Menu, Button, Space } from "antd";
-import { EllipsisOutlined } from "@ant-design/icons"; // Import icon ba chấm
-import { ScheduleData, scheduleService } from "../../services/schedule-service/schedule.service";
+import { useParams } from "react-router-dom";
+import ScheduleTabsMenu from "../../components/schedule/TabsMenu";
+import {
+  ScheduleData,
+  scheduleService,
+} from "../../services/schedule-service/schedule.service";
+import StudentPage from "../student";
 
 const ScheduleList: React.FC = () => {
   const [schedules, setSchedules] = useState<ScheduleData[]>([]); // Trạng thái để lưu danh sách lịch học
   const [loading, setLoading] = useState<boolean>(true); // Trạng thái loading
   const [error, setError] = useState<string | null>(null); // Trạng thái error
+  const [activeTab, setActiveTab] = useState<string>("1"); // Trạng thái tab hiện tại
+  const { classId } = useParams();
 
   // Hàm lấy danh sách lịch học
   const fetchSchedules = async () => {
     try {
-      const data = await scheduleService.findAll(); // Gọi service để lấy danh sách lịch học
+      const data = await scheduleService.findByClassId(classId!); // Gọi service để lấy danh sách lịch học
       setSchedules(data);
     } catch (err) {
       console.error("Error fetching schedules:", err);
@@ -21,61 +28,78 @@ const ScheduleList: React.FC = () => {
     }
   };
 
+  // Hàm xử lý thay đổi tab
+  const handleTabChange = (key: string) => {
+    setActiveTab(key);
+    if (key === "1") {
+      fetchSchedules();
+    }
+  };
+
   // Gọi hàm fetchSchedules khi component được mount
   useEffect(() => {
     fetchSchedules();
   }, []);
 
   // Menu chứa các hành động
-  const getMenu = (schedule: ScheduleData) => (
-    <Menu>
-      <Menu.Item key="edit">
-        <Button type="text" onClick={() => handleEdit(schedule)}>
-          Edit
-        </Button>
-      </Menu.Item>
-      <Menu.Item key="delete">
-        <Button type="text" onClick={() => handleDelete(schedule)}>
-          Delete
-        </Button>
-      </Menu.Item>
-    </Menu>
-  );
-
-  // Xử lý khi nhấn nút Edit
   const handleEdit = (schedule: ScheduleData) => {
     console.log("Edit schedule:", schedule);
     // Thực hiện hành động sửa lịch học ở đây
   };
 
-  // Xử lý khi nhấn nút Delete
   const handleDelete = (schedule: ScheduleData) => {
     console.log("Delete schedule:", schedule);
     // Thực hiện hành động xóa lịch học ở đây
   };
 
-  // Cột bảng
   const columns = [
-    { title: "ID", dataIndex: "id", key: "id" },
-    { title: "Ngày", dataIndex: "date", key: "date" },
-    { title: "Môn học", dataIndex: ["subject", "name"], key: "subject" },
-    { title: "Giảng viên", dataIndex: ["lecturer", "name"], key: "lecturer" },
-    { title: "Ca học", dataIndex: ["shift", "time"], key: "shift" },
-    { title: "Lớp học", dataIndex: ["classroom", "name"], key: "classroom" },
     {
-      title: "Actions",
-      key: "actions",
-      render: (record: ScheduleData) => (
-        <Space size="middle"> {/* Sử dụng Space để sắp xếp các phần tử theo chiều ngang */}
-          <Dropdown overlay={getMenu(record)} trigger={["click"]}>
-            <Button type="text" icon={<EllipsisOutlined />} />
-          </Dropdown>
-        </Space>
-      ),
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+    },
+    {
+      title: "Ngày",
+      dataIndex: "date",
+      key: "date",
+    },
+    {
+      title: "Tên Lớp",
+      dataIndex: ["class", "name"],
+      key: "className",
+    },
+    {
+      title: "Tên Ca",
+      dataIndex: ["shift", "name"],
+      key: "shiftName",
+    },
+    {
+      title: "Thời Gian Bắt Đầu Ca",
+      dataIndex: ["shift", "startTime"],
+      key: "shiftStartTime",
+    },
+    {
+      title: "Thời Gian Kết Thúc Ca",
+      dataIndex: ["shift", "endTime"],
+      key: "shiftEndTime",
+    },
+    {
+      title: "Tên Phòng Học",
+      dataIndex: ["classroom", "name"],
+      key: "classroomName",
+    },
+    {
+      title: "Giảng Viên",
+      dataIndex: ["lecturer", "name"],
+      key: "lecturerName",
+    },
+    {
+      title: "Môn học",
+      dataIndex: ["subject", "name"],
+      key: "subjectName",
     },
   ];
 
-  // Render giao diện
   if (loading) {
     return (
       <div style={{ textAlign: "center", paddingTop: "20px" }}>
@@ -90,8 +114,21 @@ const ScheduleList: React.FC = () => {
 
   return (
     <div>
-      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Danh sách lịch học</h2>
-      <Table columns={columns} dataSource={schedules} rowKey="id" />
+      <ScheduleTabsMenu onTabChange={handleTabChange} />
+      {activeTab === "1" ? (
+        <Layout
+          className="rounded-lg flex justify-center items-center"
+          style={{
+            background: "white",
+            padding: "20px",
+            minHeight: "100vh", // Ensure the layout takes the full height of the screen
+          }}
+        >
+          <Table columns={columns} dataSource={schedules} rowKey="id" />
+        </Layout>
+      ) : (
+        <StudentPage />
+      )}
     </div>
   );
 };

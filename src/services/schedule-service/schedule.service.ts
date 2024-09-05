@@ -5,7 +5,7 @@ export interface ScheduleData {
   id: number;
   date: string;
   class: any; // Cập nhật theo kiểu dữ liệu thực tế
-  shift: any;  // Cập nhật theo kiểu dữ liệu thực tế
+  shift: any; // Cập nhật theo kiểu dữ liệu thực tế
   lecturer: any; // Cập nhật theo kiểu dữ liệu thực tế
   subject: any; // Cập nhật theo kiểu dữ liệu thực tế
   classroom: any; // Cập nhật theo kiểu dữ liệu thực tế
@@ -81,15 +81,30 @@ class ScheduleService {
   }
 
   // Lấy số lượng lịch học theo ngày trong tháng
-  async getScheduleCountByDayInMonth(date: string): Promise<{ day: number; count: number }[]> {
+  async getScheduleCountByDayInMonth(
+    date: string,
+  ): Promise<{ day: number; count: number }[]> {
     try {
-      const response = await axiosInstance.get<{ day: number; count: number }[]>(
-        `/schedule/count-by-day`,
-        { params: { date } },
+      const response = await axiosInstance.get<
+        { day: number; count: number }[]
+      >(`/schedule/count-by-day`, { params: { date } });
+      return response.data;
+    } catch (error) {
+      console.error(
+        `Error fetching schedule count by day in month for date ${date}:`,
+        error,
+      );
+      throw error;
+    }
+  }
+  async findByClassId(id: string): Promise<ScheduleData[]> {
+    try {
+      const response = await axiosInstance.get<ScheduleData[]>(
+        `/schedule/by-class/${id}`,
       );
       return response.data;
     } catch (error) {
-      console.error(`Error fetching schedule count by day in month for date ${date}:`, error);
+      console.error("Error fetching schedules:", error);
       throw error;
     }
   }
