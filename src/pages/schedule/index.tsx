@@ -41,16 +41,16 @@ const ScheduleList: React.FC = () => {
     fetchSchedules();
   }, []);
 
-  // Menu chứa các hành động
-  const handleEdit = (schedule: ScheduleData) => {
-    console.log("Edit schedule:", schedule);
-    // Thực hiện hành động sửa lịch học ở đây
-  };
+  // // Menu chứa các hành động
+  // const handleEdit = (schedule: ScheduleData) => {
+  //   console.log("Edit schedule:", schedule);
+  //   // Thực hiện hành động sửa lịch học ở đây
+  // };
 
-  const handleDelete = (schedule: ScheduleData) => {
-    console.log("Delete schedule:", schedule);
-    // Thực hiện hành động xóa lịch học ở đây
-  };
+  // const handleDelete = (schedule: ScheduleData) => {
+  //   console.log("Delete schedule:", schedule);
+  //   // Thực hiện hành động xóa lịch học ở đây
+  // };
 
   const columns = [
     {
