@@ -6,6 +6,7 @@ import LoginForm from "../components/auth/LoginForm";
 import SignupForm from "../components/auth/SignupForm";
 import PageWithTitle from "../components/shared/PageWithTitle"; // Import component wrapper
 import PrivateRoute from "../components/shared/PrivateRoute";
+import ScheduleList from "../pages/schedule";
 
 // Loading Components
 const LoadingIndicator = () => (
@@ -155,6 +156,17 @@ function MainRoutes() {
             <PageWithTitle title={title}>
               <Suspense fallback={<LoadingSkeleton />}>
                 <TeacherPage />
+              </Suspense>
+            </PageWithTitle>
+          ),
+        },
+
+        {
+          path: "schedule",
+          element: (
+            <PageWithTitle title={title}>
+              <Suspense fallback={<LoadingSkeleton />}>
+                <ScheduleList />
               </Suspense>
             </PageWithTitle>
           ),

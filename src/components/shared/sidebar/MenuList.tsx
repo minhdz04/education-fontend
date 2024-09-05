@@ -36,6 +36,8 @@ const DashBoardMenuList = () => {
     { key: "users", icon: <FaRegUser />, label: "Users" },
     { key: "teachers", icon: <FaChalkboardTeacher />, label: "Teachers" },
     { key: "classes", icon: <SiGoogleclassroom />, label: "Classes" },
+    { key: "schedule", icon: <SiGoogleclassroom />, label: "Schedule" },
+
   ];
 
   return (
