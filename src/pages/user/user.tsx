@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Button, Table, Modal, Form, Input, Dropdown, Menu, Switch, Select } from "antd";
 import type { TableProps } from "antd";
-import { userService } from "../../services/user-service/user.service";
-import { FaPlus } from "react-icons/fa";
+import { Button, Dropdown, Form, Input, Menu, Modal, Select, Table } from "antd";
+import React, { useEffect, useState } from "react";
 import { AiOutlineMore } from "react-icons/ai";
+import { FaPlus } from "react-icons/fa";
+import { userService } from "../../services/user-service/user.service";
 
 interface DataType {
   key: string;
