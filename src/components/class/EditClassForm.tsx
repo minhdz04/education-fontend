@@ -14,6 +14,7 @@ const EditClassForm: React.FC<EditClassFormProps> = ({ visible, onEdit, onCancel
 
   useEffect(() => {
     if (initialValues) {
+      console.log(initialValues)
       form.setFieldsValue(initialValues);
     }
   }, [initialValues, form]);
@@ -32,20 +33,20 @@ const EditClassForm: React.FC<EditClassFormProps> = ({ visible, onEdit, onCancel
     >
       <Form form={form} layout="vertical" onFinish={handleFinish}>
         <Form.Item
-          name="className"
+          name="name"
           label="Tên Lớp"
           rules={[{ required: true, message: "Vui lòng nhập tên lớp" }]}
         >
           <Input placeholder="Nhập tên lớp" />
         </Form.Item>
-
+{/* 
         <Form.Item
           name="classDescription"
           label="Mô Tả"
           rules={[{ required: true, message: "Vui lòng nhập mô tả" }]}
         >
           <Input.TextArea placeholder="Nhập mô tả lớp" />
-        </Form.Item>
+        </Form.Item> */}
 
         <Form.Item>
           <Button type="primary" htmlType="submit">

@@ -7,6 +7,8 @@ import SignupForm from "../components/auth/SignupForm";
 import PageWithTitle from "../components/shared/PageWithTitle"; // Import component wrapper
 import PrivateRoute from "../components/shared/PrivateRoute";
 import ScheduleList from "../pages/schedule";
+import AttendancePage from "../pages/attendance";
+
 
 // Loading Components
 const LoadingIndicator = () => (
@@ -39,7 +41,7 @@ const ClassPage = lazy(() => import("../pages/classes"));
 const MainPage = lazy(() => import("../pages"));
 const StudentPage = lazy(() => import("../pages/student"));
 const TeacherPage = lazy(() => import("../pages/teacher"));
-
+const UserPage = lazy(() => import("../pages/user/user"))
 
 const getTitleFromLocation = (pathname: string) => {
   if (
@@ -64,6 +66,8 @@ const getTitleFromLocation = (pathname: string) => {
       return "Quản lý giáo viên";
     case "/classes":
       return "Quản lý lớp học ";
+    case "/schedule/class":
+      return "Quản lý lịch học ";
     default:
       return "404 - Không Tìm Thấy Trang";
   }
@@ -125,7 +129,7 @@ function MainRoutes() {
           element: (
             <PageWithTitle title={title}>
               <Suspense fallback={<LoadingSkeleton />}>
-                {/* <AiEmployeePage /> */}
+              <UserPage />
               </Suspense>
             </PageWithTitle>
           ),
@@ -161,12 +165,24 @@ function MainRoutes() {
           ),
         },
 
+        
+
         {
           path: "schedule/class/:classId",
           element: (
             <PageWithTitle title={title}>
               <Suspense fallback={<LoadingSkeleton />}>
                 <ScheduleList />
+              </Suspense>
+            </PageWithTitle>
+          ),
+        },
+        {
+          path: "class/schedule/attendance/:scheduleId",
+          element: (
+            <PageWithTitle title={title}>
+              <Suspense fallback={<LoadingSkeleton />}>
+                <AttendancePage />
               </Suspense>
             </PageWithTitle>
           ),

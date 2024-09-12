@@ -113,17 +113,17 @@ const TeacherPage: React.FC = () => {
   const menu = (teacher: DataType) => (
     <Menu>
       <Menu.Item key="edit" onClick={() => showEditModal(teacher)}>
-        Edit
+        Sửa
       </Menu.Item>
       <Menu.Item key="delete" onClick={() => handleDelete(teacher.key)}>
-        Delete
+        Xóa
       </Menu.Item>
     </Menu>
   );
 
   const columns: TableProps<DataType>["columns"] = [
     {
-      title: "Name",
+      title: "Tên giảng viên",
       dataIndex: "name",
       key: "name",
     },
@@ -182,10 +182,10 @@ const TeacherPage: React.FC = () => {
           onCancel={handleCancel}
           footer={[
             <Button key="cancel" onClick={handleCancel}>
-              Cancel
+              Hủy
             </Button>,
             <Button key="create" type="primary" onClick={handleCreate}>
-              Create
+              Tạo
             </Button>,
           ]}
           centered
@@ -210,10 +210,10 @@ const TeacherPage: React.FC = () => {
           onCancel={handleEditCancel}
           footer={[
             <Button key="cancel" onClick={handleEditCancel}>
-              Cancel
+              Hủy
             </Button>,
             <Button key="create" type="primary" onClick={handleEdit}>
-              Save
+              Lưu
             </Button>,
           ]}
           centered

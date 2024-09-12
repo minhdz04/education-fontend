@@ -1,21 +1,22 @@
 // components/class/ClassItem.tsx
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Card, Dropdown, MenuProps } from "antd";
+import { Card, Dropdown, MenuProps, message } from "antd";
 import { CiMenuKebab } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import EditClassForm from "./EditClassForm";
 import useModals from "../../hooks/useModal"; // Adjust the path as needed
+import ClassService from "../../services/class-service/class.service"; // Import ClassService
 
 interface ClassItemProps {
-  title: string;
+  name: string;
   position: string;
   totalStudent: number;
   classId: string;
 }
 
 const ClassItem = ({
-  title,
+  name,
   position,
   totalStudent,
   classId,
@@ -34,13 +35,19 @@ const ClassItem = ({
 
   // Edit action
   const handleEdit = () => {
-    setEditingClass({ title, position, totalStudent, classId });
+    setEditingClass({ name, position, totalStudent, classId });
     showModal("editClassModal");
   };
 
   // Delete action
-  const handleDelete = () => {
-    console.log(`Delete class ${classId}`);
+  const handleDelete = async () => {
+    try {
+      await ClassService.deleteClass(classId);
+      // Refresh the class list or handle UI update
+      
+    } catch (error) {
+      message.error("Failed to delete class");
+    }
   };
 
   // Dropdown menu items
@@ -59,6 +66,19 @@ const ClassItem = ({
       danger: true,
     },
   ];
+
+  const handleSaveEdit = async (updatedClass: ClassItemProps) => {
+    try {
+      console.log(classId, updatedClass);
+      await ClassService.updateClass(classId, updatedClass); // Call update function
+      message.success("Class updated successfully");
+      hideModal("editClassModal");
+      
+      // Refresh the class list or handle UI update
+    } catch (error) {
+      message.error("Failed to update class");
+    }
+  };
 
   return (
     <>
@@ -91,12 +111,12 @@ const ClassItem = ({
         </div>
         <div>
           <Card.Meta
-            title={title}
-            description={position}
+            title={name}
+            description={"Toltal Student"}
             style={{ marginBottom: "16px" }}
           />
           <div style={{ marginTop: "8px" }}>
-            <p
+            {/* <p
               style={{
                 fontSize: "14px",
                 fontWeight: "500",
@@ -105,7 +125,7 @@ const ClassItem = ({
               }}
             >
               Total Student
-            </p>
+            </p> */}
             <p
               style={{
                 fontSize: "24px",
@@ -132,10 +152,7 @@ const ClassItem = ({
         <EditClassForm
           visible={isVisible("editClassModal")}
           initialValues={editingClass}
-          onEdit={() => {
-            // Add your logic for handling edit
-            hideModal("editClassModal");
-          }}
+          onEdit={handleSaveEdit}
           onCancel={() => hideModal("editClassModal")}
         />
       )}

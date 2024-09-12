@@ -2,6 +2,10 @@ import { AxiosResponse } from "axios";
 import { StudentList } from "../../models/student.model"; // Assuming you have a StudentList type/model defined
 import axiosInstance from "../../utils/axiosInstance";
 
+export interface StudentCountData {
+  total: number;
+}
+
 class StudentService {
   // Tạo một student mới
   async create(studentList: StudentList): Promise<StudentList> {
@@ -60,6 +64,16 @@ class StudentService {
       console.log("Delete : " + id);
     } catch (error: any) {
       throw new Error("Error deleting student: " + error.message);
+    }
+  }
+
+  async getTotalStudents(classId: string): Promise<number> {
+    try {
+      const response = await axiosInstance.get<StudentCountData>(`/student-list/class/${classId}/total`);
+      return response.data.total;
+    } catch (error) {
+      console.error(`Error fetching total students for class ${classId}:`, error);
+      throw error; // Ném lỗi lên để xử lý ở nơi gọi hàm
     }
   }
 }
