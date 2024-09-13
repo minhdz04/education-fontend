@@ -112,7 +112,7 @@ const ClassItem = ({
         <div>
           <Card.Meta
             title={name}
-            description={"Toltal Student"}
+            description={"Total Student"}
             style={{ marginBottom: "16px" }}
           />
           <div style={{ marginTop: "8px" }}>
